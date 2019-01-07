@@ -11,6 +11,8 @@ and open the template in the editor.
     </head>
     <body>
         <?php
+        require_once 'db.php';
+        
         function displayForm(){
             ?><form>
             Name: <input name="name"><br>
