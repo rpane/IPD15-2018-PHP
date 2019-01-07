@@ -27,7 +27,17 @@ and open the template in the editor.
             $age = $_GET['age'];
             if((strlen($name)>2) && ($age >0 && $age <150)){
                 //State 2: Submission is Valid
-                echo "<p>Hello! $name, you are $age y/o!</p>\n";
+                $query = sprintf("INSERT INTO people VALUES (NULL, '%s', '%s')",
+                mysqli_real_escape_string($link, $name),
+                mysqli_real_escape_string($link, $age));
+                
+                $result = mysqli_query($link, $query);
+                if(!$result){
+                    echo "<p>Error: SQL Database query error: " . mysqli_errno($link) . "</p>";
+                    exit;
+                }
+                echo "<p>Added record for $name, $age y/o!</p>\n";
+                
             }else{
                 //State 3: Failed Submission
                 echo "<p>Error: name must be at least 2 characters long"
