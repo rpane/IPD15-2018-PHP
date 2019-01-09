@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require_once 'db.php';
 
 function getForm($username = "") {
@@ -37,7 +37,9 @@ if (isset($_POST['username'])) { // State 2 or 3 - receiving submission
         echo "<p>Login credentials do not match our records. You can try again or ";
         echo "<a href=register.php>register</a>.";
         echo getForm($username);
-    } else { // state 2: submission successful        
+    } else { // state 2: submission successful
+        unset($user['password']);
+        $_SESSION['user'] = $user;
         echo "<p>Login successful</p>\n";
     }
 } else { // state 1: first show
