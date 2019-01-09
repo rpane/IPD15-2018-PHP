@@ -2,16 +2,12 @@
 session_start();
 require_once 'db.php';
 ?><!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+
 <html>
     <head>
         <link href="styles.css" rel="stylesheet">
         <meta charset="UTF-8">
-        <title>Index</title>
+        <title>Add Article</title>
     </head>
     <body>
         <div id="centeredContent">
