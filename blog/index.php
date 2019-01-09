@@ -9,10 +9,12 @@ and open the template in the editor.
 -->
 <html>
     <head>
+        <link href="styles.css" rel="stylesheet">
         <meta charset="UTF-8">
-        <title></title>
+        <title>Index</title>
     </head>
     <body>
+         <div id="centeredContent">
         <?php
         $query = "SELECT a.id, a.creationTime, a.title, a.body, u.username authorName " .
                 " FROM articles as a, users as u WHERE a.authorId = u.id";
@@ -35,5 +37,6 @@ and open the template in the editor.
         }
         echo "</div>\n";
         ?>
+         </div>
     </body>
 </html>
