@@ -14,7 +14,7 @@ require_once 'db.php';
             <?php
             $id = $_GET['id'];
              $query = sprintf("SELECT a.id, a.creationTime, a.title, a.body, u.username authorName " .
-                " FROM articles as a JOIN users as u ON a.authorId = u.id WHERE   u.id = '%s'",  mysqli_real_escape_string($link, $id));
+                " FROM articles as a JOIN users as u ON a.authorId = u.id WHERE u.id = '%s'",  mysqli_real_escape_string($link, $id));
         $result = mysqli_query($link, $query);
         if (!$result) {
             echo "<p>Error: SQL database query error: " . mysqli_error($link) . "</p>";
