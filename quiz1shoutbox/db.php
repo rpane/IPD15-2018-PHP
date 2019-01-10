@@ -1,11 +1,9 @@
 <?php
 
-$db_user = 'blog';
-$db_name = 'blog';
-$db_pass = "KE9lj2B7St1xLzpV";
-//$db_port = 3306; //Home
+$db_user = 'quiz1shout';
+$db_name = 'quiz1shout';
+$db_pass = "NcB73rDTqamBe7Wu";
 $db_port = 3333; //Class
-
 $db_host = 'localhost';
 
 $link = mysqli_connect($db_host, $db_user, $db_pass, $db_name, $db_port);
