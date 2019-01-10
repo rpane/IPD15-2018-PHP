@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Random Number</title>
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+         <script>
+             $(document).ready(function(){
+                 $("#AjaxBut").click(function(){
+                  var maxNum = $("input[name=max]").val();  
+                  var minNum = $("input[name=min]").val(); 
+                  $("#rndNum").load("ajaxgetrandom.php?min=" + minNum+"&max="+maxNum);
+                 });
+             });
+         </script>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>        
+        Min: <input type="number" name="min"><br>
+        Max: <input type="number" name="max"><br>
+        <button id="AjaxBut">Get Ajax Random Number</button>
+        <p>Random number is:<span id="rndNum"></span></p>
+        
+    </body>
+</html>

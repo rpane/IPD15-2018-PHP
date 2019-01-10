@@ -11,6 +11,9 @@ require_once 'db.php';
     </head>
     <body>
          <div id="centeredContent">
+             <?php
+             
+             ?>
              <h1>Welcome to my blog, read on!</h1>
         <?php
         $query = "SELECT a.id, a.creationTime, a.title, a.body, u.username authorName " .
