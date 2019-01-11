@@ -24,14 +24,8 @@ class __TwigTemplate_a88c3403678bcf16ead73a383a773ad10afdf11571cf29ee0917f1b8f6d
         // line 4
         echo "
 <form method=\"post\">
-    Email: <input type=\"text\" name=\"email\" value=\"";
-        // line 6
-        echo twig_escape_filter($this->env, $this->getAttribute(($context["v"] ?? null), "email", array()), "html", null, true);
-        echo "\"><br>
-    Password: <input type=\"password\" name=\"pass1\" value=\"";
-        // line 7
-        echo twig_escape_filter($this->env, $this->getAttribute(($context["v"] ?? null), "pass1", array()), "html", null, true);
-        echo "\"><br>   
+    Email: <input type=\"text\" name=\"email\"><br>
+    Password: <input type=\"password\" name=\"password\"><br>   
     <input type=\"submit\" value=\"Login\">
 </form>";
     }
@@ -48,7 +42,7 @@ class __TwigTemplate_a88c3403678bcf16ead73a383a773ad10afdf11571cf29ee0917f1b8f6d
 
     public function getDebugInfo()
     {
-        return array (  33 => 7,  29 => 6,  25 => 4,  21 => 2,  19 => 1,);
+        return array (  25 => 4,  21 => 2,  19 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -66,9 +60,9 @@ class __TwigTemplate_a88c3403678bcf16ead73a383a773ad10afdf11571cf29ee0917f1b8f6d
 {% endif %}
 
 <form method=\"post\">
-    Email: <input type=\"text\" name=\"email\" value=\"{{v.email}}\"><br>
-    Password: <input type=\"password\" name=\"pass1\" value=\"{{v.pass1}}\"><br>   
+    Email: <input type=\"text\" name=\"email\"><br>
+    Password: <input type=\"password\" name=\"password\"><br>   
     <input type=\"submit\" value=\"Login\">
-</form>", "login.html.twig", "C:\\xampp\\htdocs\\IPD15-2018-PHP\\slimblog\\templates\\login.html.twig");
+</form>", "login.html.twig", "C:\\xampp\\htdocs\\ipd15\\IPD15-2018-PHP\\slimblog\\templates\\login.html.twig");
     }
 }

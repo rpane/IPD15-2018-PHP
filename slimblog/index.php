@@ -6,7 +6,8 @@ require_once 'vendor/autoload.php';
 DB::$user = 'slimblog';
 DB::$password = 'Cwg7tVdISaAkHa9A';
 DB::$dbName = 'slimblog';
-DB::$port = 3333;
+//DB::$port = 3333;//School
+DB::$port = 3306;
 DB::$host = 'localhost';
 DB::$encoding = 'utf8';
 
