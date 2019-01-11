@@ -1,0 +1,20 @@
+{% if errorList %}
+    <ul>
+        {% for error in errorList %}
+            <li>{{error}}</li>
+            {% endfor %}
+    </ul>
+{% endif %}
+
+{% if rndList %}
+    {% for num in rndList %}
+        {{num}},
+    {% endfor %}
+{% endif %}
+
+<form method="post">
+    Min: <input type="number" name="min"><br>
+    Max: <input type="number" name="max"><br>
+    Count: <input type="number" name="count"><br>
+    <input type="submit" value="Generate">
+</form>

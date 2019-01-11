@@ -73,4 +73,53 @@ $app->post('/addme', function() use ($app){
         ));
     }
 });
+
+$app->get('/random', function() use ($app){
+//State 1: First Show
+    $app->render('random.html.twig');
+});
+
+$app->post('/random', function() use ($app){
+//Receieving Submission
+    $min = $app ->request()->post('min');
+    $max = $app ->request()->post('max');
+    $count = $app ->request()->post('count');
+    //Verify submission
+    $
+    $errorList = array();
+    if($min > $max){
+        array_push($errorList,"min must be less than max");
+    }
+    if(!is_numeric($min) || $min <1 ){
+        array_push($errorList, "Min must be an integer above 1");
+        
+    }
+    if(!is_numeric($max) || $max <1 ){
+        array_push($errorList, "Max must be an integer above 1");
+    }
+    if(!is_numeric($count) || $count <1 ){
+        array_push($errorList, "Count must be an integer above 1");
+    }
+    //
+    if(!$errorList){
+        //state 2: successful submission
+        
+        $value = rand($min, $max);
+        $rndList = array();
+        for ($i =0; $i <$count; $i++){
+             $value = rand($min, $max);
+             array_push($rndList, $value);
+        }
+        
+        $app->render('random.html.twig',array('rndList' => $rndList            
+        ));
+        
+    }else{
+        //State 3: failed submission
+        $app->render('random.html.twig',array(
+            'errorList' => $errorList
+        ));
+    }
+});
+
 $app->run();
