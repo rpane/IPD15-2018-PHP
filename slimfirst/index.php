@@ -62,10 +62,15 @@ $app->post('/addme', function() use ($app){
     //
     if(!$errorList){
         //state 2: successful submission
-        echo 'success';
+        DB::insert('people',array(
+        'name' => $name,
+        'age' => $age));
+        $app->render('addme_success.html.twig');
     }else{
         //State 3: failed submission
-        echo "failure";
+        $app->render('addme.html.twig',array(
+            'errorList' => $errorList
+        ));
     }
 });
 $app->run();
