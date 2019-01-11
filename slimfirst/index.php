@@ -41,4 +41,31 @@ $app->get('/list', function(){
 $peoplelist = DB::query("SELECT * FROM people");
 print_r($peoplelist);
 });
+
+$app->get('/addme', function() use ($app){
+//State 1: First Show
+    $app->render('addme.html.twig');
+});
+
+$app->post('/addme', function() use ($app){
+//Receieving Submission
+    $name = $app ->request()->post('name');
+    $age = $app ->request()->post('age');
+    //Verify submission
+    $errorList = array();
+    if(strlen($name) < 2 || strlen($name) > 100){
+        array_push($errorList,"Name must be between 2-100 characters");
+    }
+    if(!is_numeric($age) || $age <1 || $age > 150){
+        array_push($errorList, "Age must be an integer in 1-150 range");
+    }
+    //
+    if(!$errorList){
+        //state 2: successful submission
+        echo 'success';
+    }else{
+        //State 3: failed submission
+        echo "failure";
+    }
+});
 $app->run();
