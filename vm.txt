@@ -12,3 +12,5 @@ Setup virtualHost at home.
 		RewriteEngine On
 		RewriteCond %{REQUEST_FILENAME} !-f
 		RewriteRule ^ index.php [QSA,L]
+
+* Dont forget to change project url and remove index.php

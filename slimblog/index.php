@@ -23,6 +23,11 @@ $view->parserOptions = array(
 );
 $view->setTemplatesDirectory(dirname(__FILE__) . '/templates');
 
+$app->get('/isemailregistered/(:email)', function($email = "") use ($app){
+$user = DB::queryFirstRow("SELECT * FROM users WHERE email=%s", $email);
+echo ($user) ? "Email already in use" : "";    
+});
+
 $app->get('/register', function() use ($app) {
 //State 1: First Show
     $app->render('register.html.twig');
