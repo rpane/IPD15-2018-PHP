@@ -82,7 +82,7 @@ $app->post('/login', function() use ($app) {
     // verify submission
     $isLoginSuccessful = false;
     //
-    $user = DB::queryFirstRow("SELECT * FROM users WHERE email=%s", $email);    
+    $user = DB::queryFirstRow("SELECT * FROM users WHERE email=%s", $email);
     if ($user && ($user['password'] == $password)) {
         $isLoginSuccessful = true;
     }
@@ -107,5 +107,56 @@ $app->get('/session', function() {
     echo "<pre>SESSION:\n\n";
     // var_dump($_SESSION);
     print_r($_SESSION);
+});
+
+$app->get('/articleadd', function() use ($app) {
+     if (!isset($_SESSION['user'])) {
+        echo "<p>Unauthorized, Login first</p>";
+        exit;
+    }
+    $app->render('articleadd.html.twig');
+});
+
+$app->post('/articleadd', function() use ($app) {
+   
+
+//receiving submission
+    $title = $app->request()->post('title');
+    $body = $app->request()->post('body');
+    $user = $_SESSION['user']['id'];
+    $errorList = array();
+    //Verify Submission
+    if (strlen($title) < 10) {
+        array_push($errorList, "Title must be at least 10 characters long.");
+    }
+    if(strlen($body) < 50){
+         array_push($errorList, "Article must be at least 50 characters long.");
+    }
+
+    if (!$errorList) {
+        //state 2: successful submission
+
+        DB:: insert('articles', array(
+            'authorId' => $user,
+            'title' => $title,
+            'body' => $body
+        ));
+        $app->render('articleadd_success.html.twig');
+    } else {
+        //State 3: failed submission
+        $app->render('articleadd.html.twig', array(
+            'errorList' => $errorList
+        ));
+    }
+});
+$app->get('/index', function() use ($app) {
+     if (!isset($_SESSION['user'])) {
+        echo "<p>Unauthorized, Login first</p>";
+        exit;
+    }
+    $app->render('index.html.twig');
+});
+$app->post('/index', function() use ($app) {
+    
 });
 $app->run();
