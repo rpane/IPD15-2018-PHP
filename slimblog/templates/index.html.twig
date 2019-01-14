@@ -1,1 +1,14 @@
- <h1>Welcome to my blog, read on!</h1>
+{% extends "master.html.twig"%}
+
+{% block title %}Login{% endblock %}
+{% block content %}
+<div class="artList">
+    {% for a in al %}
+        <div class="artHead">
+            <b>{{a.title}}</b>
+            <br>Posted by {{a.authorName}} on {{a.creationTime}}<br>
+            <div class="artBody">{{a.body}}</div>
+        </div>
+    {% endfor %}
+</div>
+    {% endblock %}

@@ -7,24 +7,43 @@ class __TwigTemplate_cb7bc812c01590405de49d2d2d0ef6d7237c1ec20ea4cdedfacaeb2f404
     {
         parent::__construct($env);
 
-        $this->parent = false;
-
+        // line 1
+        $this->parent = $this->loadTemplate("master.html.twig", "articleadd.html.twig", 1);
         $this->blocks = array(
+            'title' => array($this, 'block_title'),
+            'content' => array($this, 'block_content'),
         );
+    }
+
+    protected function doGetParent(array $context)
+    {
+        return "master.html.twig";
     }
 
     protected function doDisplay(array $context, array $blocks = array())
     {
-        // line 1
+        $this->parent->display($context, array_merge($this->blocks, $blocks));
+    }
+
+    // line 3
+    public function block_title($context, array $blocks = array())
+    {
+        echo "Login";
+    }
+
+    // line 4
+    public function block_content($context, array $blocks = array())
+    {
+        // line 5
         if (($context["errorList"] ?? null)) {
-            // line 2
-            echo "    <ul>
+            // line 6
+            echo "    <ul class=\"error\">
         ";
-            // line 3
+            // line 7
             $context['_parent'] = $context;
             $context['_seq'] = twig_ensure_traversable(($context["errorList"] ?? null));
             foreach ($context['_seq'] as $context["_key"] => $context["error"]) {
-                // line 4
+                // line 8
                 echo "            <li>";
                 echo twig_escape_filter($this->env, $context["error"], "html", null, true);
                 echo "</li>
@@ -33,11 +52,11 @@ class __TwigTemplate_cb7bc812c01590405de49d2d2d0ef6d7237c1ec20ea4cdedfacaeb2f404
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['error'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 6
+            // line 10
             echo "    </ul>
 ";
         }
-        // line 8
+        // line 12
         echo "
 <form method=\"post\">
     Title: <input type=\"text\" name=\"title\"><br>
@@ -59,7 +78,7 @@ class __TwigTemplate_cb7bc812c01590405de49d2d2d0ef6d7237c1ec20ea4cdedfacaeb2f404
 
     public function getDebugInfo()
     {
-        return array (  41 => 8,  37 => 6,  28 => 4,  24 => 3,  21 => 2,  19 => 1,);
+        return array (  60 => 12,  56 => 10,  47 => 8,  43 => 7,  40 => 6,  38 => 5,  35 => 4,  29 => 3,  11 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -72,8 +91,12 @@ class __TwigTemplate_cb7bc812c01590405de49d2d2d0ef6d7237c1ec20ea4cdedfacaeb2f404
 
     public function getSourceContext()
     {
-        return new Twig_Source("{% if errorList %}
-    <ul>
+        return new Twig_Source("{% extends \"master.html.twig\"%}
+
+{% block title %}Login{% endblock %}
+{% block content %}
+{% if errorList %}
+    <ul class=\"error\">
         {% for error in errorList %}
             <li>{{error}}</li>
             {% endfor %}
@@ -85,6 +108,7 @@ class __TwigTemplate_cb7bc812c01590405de49d2d2d0ef6d7237c1ec20ea4cdedfacaeb2f404
     <textarea name=\"body\"></textarea><br>
     <input type=\"submit\" value=\"Publish Article\">
 </form> 
-", "articleadd.html.twig", "C:\\xampp\\htdocs\\ipd15\\IPD15-2018-PHP\\slimblog\\templates\\articleadd.html.twig");
+{% endblock %}
+", "articleadd.html.twig", "C:\\xampp\\htdocs\\IPD15-2018-PHP\\slimblog\\templates\\articleadd.html.twig");
     }
 }

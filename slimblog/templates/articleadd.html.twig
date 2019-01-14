@@ -1,5 +1,9 @@
+{% extends "master.html.twig"%}
+
+{% block title %}Login{% endblock %}
+{% block content %}
 {% if errorList %}
-    <ul>
+    <ul class="error">
         {% for error in errorList %}
             <li>{{error}}</li>
             {% endfor %}
@@ -11,3 +15,4 @@
     <textarea name="body"></textarea><br>
     <input type="submit" value="Publish Article">
 </form> 
+{% endblock %}

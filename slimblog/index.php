@@ -6,8 +6,8 @@ require_once 'vendor/autoload.php';
 DB::$user = 'slimblog';
 DB::$password = 'Cwg7tVdISaAkHa9A';
 DB::$dbName = 'slimblog';
-//DB::$port = 3333;//School
-DB::$port = 3306;
+DB::$port = 3333;//School
+//DB::$port = 3306;//Home
 DB::$host = 'localhost';
 DB::$encoding = 'utf8';
 
@@ -126,11 +126,11 @@ $app->post('/articleadd', function() use ($app) {
     $user = $_SESSION['user']['id'];
     $errorList = array();
     //Verify Submission
-    if (strlen($title) < 10) {
-        array_push($errorList, "Title must be at least 10 characters long.");
+    if (strlen($title) < 2 || strlen($title) > 50) {
+        array_push($errorList, "Title must be at least 2-50 characters long.");
     }
-    if(strlen($body) < 50){
-         array_push($errorList, "Article must be at least 50 characters long.");
+    if(strlen($body) < 2 || strlen($body) > 100){
+         array_push($errorList, "Article must be at least 2-100 characters long.");
     }
 
     if (!$errorList) {
@@ -149,14 +149,15 @@ $app->post('/articleadd', function() use ($app) {
         ));
     }
 });
-$app->get('/index', function() use ($app) {
-     if (!isset($_SESSION['user'])) {
-        echo "<p>Unauthorized, Login first</p>";
-        exit;
-    }
-    $app->render('index.html.twig');
+$app->get('/', function() use ($app) {
+    $articleList = DB::query("SELECT a.id, a.creationTime, a.title, a.body, u.email authorName " .
+                " FROM articles as a, users as u WHERE a.authorId = u.id");
+    $app->render('index.html.twig', array('al' => $articleList));
 });
-$app->post('/index', function() use ($app) {
-    
+
+$app->get('/article/:id', function($id) use ($app) {
+    $article = DB::queryFirstRow("SELECT a.id, a.creationTime, a.title, a.body, u.email authorName " .
+                " FROM articles as a, users as u WHERE a.authorId = u.id AND a.id=%s", $id);
+    $app->render("article_view.html.twig", array('a' => $article));
 });
 $app->run();

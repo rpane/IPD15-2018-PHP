@@ -1,5 +1,9 @@
+{% extends "master.html.twig"%}
+
+{% block title %}Login{% endblock %}
+{% block content %}
 {% if errorList %}
-    <ul>
+    <ul class="error">
         {% for error in errorList %}
             <li>{{error}}</li>
             {% endfor %}
@@ -13,3 +17,4 @@
     Password (repeat): <input type="password" name="pass2" value="{{v.pass2}}"><br>
     <input type="submit" value="Register">
 </form>
+{% endblock %}

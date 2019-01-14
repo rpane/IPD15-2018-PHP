@@ -41,6 +41,6 @@ class __TwigTemplate_b49c0a87f48049107a7850348cf7d4066d6bb46e9dcd0f80ccc39f77f1a
     public function getSourceContext()
     {
         return new Twig_Source("<p>Logged successful</p>
-", "login_success.html.twig", "C:\\xampp\\htdocs\\ipd15\\IPD15-2018-PHP\\slimblog\\templates\\login_success.html.twig");
+", "login_success.html.twig", "C:\\xampp\\htdocs\\IPD15-2018-PHP\\slimblog\\templates\\login_success.html.twig");
     }
 }

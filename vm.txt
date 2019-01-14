@@ -1,0 +1,14 @@
+Setup virtualHost at home.
+	- Appache -> httpd.conf
+	- Add text to httpd.conf at bottom
+		
+		Listen 8001
+		<VirtualHost *:8001>
+			DocumentRoot "C:/xampp/htdocs/IPD15-2018-PHP/slimblog"
+		</VirtualHost>
+
+	- Create a file with netbeans titled: .htaccess
+	- Paste contents
+		RewriteEngine On
+		RewriteCond %{REQUEST_FILENAME} !-f
+		RewriteRule ^ index.php [QSA,L]
