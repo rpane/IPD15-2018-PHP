@@ -101,6 +101,6 @@ class __TwigTemplate_6dde007068343b21f60b5941857ffe5a1e509de78bb79642de049eade75
         </div>
     {% endfor %}
 </div>
-    {% endblock %}", "todoList.html.twig", "C:\\xampp\\htdocs\\ipd15\\IPD15-2018-PHP\\slimtodo\\templates\\todoList.html.twig");
+    {% endblock %}", "todoList.html.twig", "C:\\xampp\\htdocs\\IPD15-2018-PHP\\slimtodo\\templates\\todoList.html.twig");
     }
 }

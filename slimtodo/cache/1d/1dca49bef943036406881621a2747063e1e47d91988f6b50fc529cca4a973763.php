@@ -1,14 +1,14 @@
 <?php
 
-/* todoadd_success.html.twig */
-class __TwigTemplate_0543844ec9b2ce0e1b81e2e326b16d0f1b2918fb03c4f0db75f096185a5d11d5 extends Twig_Template
+/* fatal_error.html.twig */
+class __TwigTemplate_1dc0a480b3301fb712ab2f2e52e0c1d5c8760ecbc8e67b66c216e98e9d3fa5ae extends Twig_Template
 {
     public function __construct(Twig_Environment $env)
     {
         parent::__construct($env);
 
         // line 2
-        $this->parent = $this->loadTemplate("master.html.twig", "todoadd_success.html.twig", 2);
+        $this->parent = $this->loadTemplate("master.html.twig", "fatal_error.html.twig", 2);
         $this->blocks = array(
             'title' => array($this, 'block_title'),
             'content' => array($this, 'block_content'),
@@ -28,20 +28,21 @@ class __TwigTemplate_0543844ec9b2ce0e1b81e2e326b16d0f1b2918fb03c4f0db75f096185a5
     // line 4
     public function block_title($context, array $blocks = array())
     {
-        echo "Add successful";
+        echo "Fatal Error";
     }
 
     // line 6
     public function block_content($context, array $blocks = array())
     {
         // line 7
-        echo "    <p>Successfully added todo</p>
+        echo "    <p>Fatal Error, Ninjas are currently focusing their chi to resolve the issue</p>
+    <img src=\"/images/ninja.png\">
 ";
     }
 
     public function getTemplateName()
     {
-        return "todoadd_success.html.twig";
+        return "fatal_error.html.twig";
     }
 
     public function isTraitable()
@@ -67,10 +68,12 @@ class __TwigTemplate_0543844ec9b2ce0e1b81e2e326b16d0f1b2918fb03c4f0db75f096185a5
         return new Twig_Source("
 {% extends \"master.html.twig\" %}
 
-{% block title %}Add successful{% endblock %}
+{% block title %}Fatal Error{% endblock %}
 
 {% block content %}
-    <p>Successfully added todo</p>
-{% endblock %}", "todoadd_success.html.twig", "C:\\xampp\\htdocs\\IPD15-2018-PHP\\slimtodo\\templates\\todoadd_success.html.twig");
+    <p>Fatal Error, Ninjas are currently focusing their chi to resolve the issue</p>
+    <img src=\"/images/ninja.png\">
+{% endblock %}
+", "fatal_error.html.twig", "C:\\xampp\\htdocs\\IPD15-2018-PHP\\slimtodo\\templates\\fatal_error.html.twig");
     }
 }

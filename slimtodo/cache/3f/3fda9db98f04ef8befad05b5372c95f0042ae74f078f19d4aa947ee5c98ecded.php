@@ -1,14 +1,14 @@
 <?php
 
-/* todoadd_success.html.twig */
-class __TwigTemplate_0543844ec9b2ce0e1b81e2e326b16d0f1b2918fb03c4f0db75f096185a5d11d5 extends Twig_Template
+/* todoedit_success.html.twig */
+class __TwigTemplate_4a9cb1a92cc4bd17c66d48974e1337f19073d1883f2eb101361b530732bf6e3a extends Twig_Template
 {
     public function __construct(Twig_Environment $env)
     {
         parent::__construct($env);
 
         // line 2
-        $this->parent = $this->loadTemplate("master.html.twig", "todoadd_success.html.twig", 2);
+        $this->parent = $this->loadTemplate("master.html.twig", "todoedit_success.html.twig", 2);
         $this->blocks = array(
             'title' => array($this, 'block_title'),
             'content' => array($this, 'block_content'),
@@ -28,20 +28,20 @@ class __TwigTemplate_0543844ec9b2ce0e1b81e2e326b16d0f1b2918fb03c4f0db75f096185a5
     // line 4
     public function block_title($context, array $blocks = array())
     {
-        echo "Add successful";
+        echo "Edit successful";
     }
 
     // line 6
     public function block_content($context, array $blocks = array())
     {
         // line 7
-        echo "    <p>Successfully added todo</p>
+        echo "    <p>Successfully edited todo</p>
 ";
     }
 
     public function getTemplateName()
     {
-        return "todoadd_success.html.twig";
+        return "todoedit_success.html.twig";
     }
 
     public function isTraitable()
@@ -67,10 +67,10 @@ class __TwigTemplate_0543844ec9b2ce0e1b81e2e326b16d0f1b2918fb03c4f0db75f096185a5
         return new Twig_Source("
 {% extends \"master.html.twig\" %}
 
-{% block title %}Add successful{% endblock %}
+{% block title %}Edit successful{% endblock %}
 
 {% block content %}
-    <p>Successfully added todo</p>
-{% endblock %}", "todoadd_success.html.twig", "C:\\xampp\\htdocs\\IPD15-2018-PHP\\slimtodo\\templates\\todoadd_success.html.twig");
+    <p>Successfully edited todo</p>
+{% endblock %}", "todoedit_success.html.twig", "C:\\xampp\\htdocs\\IPD15-2018-PHP\\slimtodo\\templates\\todoedit_success.html.twig");
     }
 }

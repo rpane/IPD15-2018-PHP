@@ -1,0 +1,28 @@
+{% extends "master.html.twig"%}
+
+{% block title %}
+    {% if action == 'edit' %}
+        Editing todo
+    {% else %}
+        Adding todo
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% if errorList %}
+        <ul class="error">
+            {% for error in errorList %}
+                <li>{{error}}</li>
+                {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form method="post">
+        Task: <input type="text" name="task" value="{{v.task}}"><br>
+        Due Date: <input type="date" name="dueDate" value="{{v.dueDate}}"><br>
+        Is done: <input type="checkbox" name="isDone" value="true"
+                        {% if v.isDone == 'true' %}checked{% endif %}><br>     
+        <input type="submit" value="{% if action == 'edit'
+           %}Save todo{% else %}Add todo{% endif %}">
+    </form> 
+{% endblock %}

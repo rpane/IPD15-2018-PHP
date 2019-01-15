@@ -97,6 +97,6 @@ class __TwigTemplate_4af65d0d1ace238c8af7f5a52ea00ee689db0387988a7eb2638699586e1
             <!---- TODO: add Google Analytics tracking code --->
         </div>
     </body>
-</html>", "master.html.twig", "C:\\xampp\\htdocs\\ipd15\\IPD15-2018-PHP\\slimtodo\\templates\\master.html.twig");
+</html>", "master.html.twig", "C:\\xampp\\htdocs\\IPD15-2018-PHP\\slimtodo\\templates\\master.html.twig");
     }
 }
