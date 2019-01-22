@@ -1,0 +1,4 @@
+[2019-01-22 17:35:17] main.ERROR: SQL error: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'NULL WHERE id=5' at line 1 [] []
+[2019-01-22 17:35:17] main.ERROR: SQL query: UPDATE `todos` SET NULL WHERE id=5 [] []
+[2019-01-22 17:42:26] main.ERROR: POST /todos failed: Task must be 1-100 characters long [] []
+[2019-01-22 17:43:09] main.ERROR: POST /todos failed: Task must be 1-100 characters long [] []
