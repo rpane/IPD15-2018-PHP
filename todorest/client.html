@@ -1,75 +1,103 @@
 <!DOCTYPE html>
-
 <html>
     <head>
         <title>TODO Web App</title>
+        <link rel="stylesheet" href="/styles.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="/styles.css">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script>
+            var currentId = 0; // 0 means no record selected
+
+            function selectItem(todoId) {
+                currentId = todoId;
+                $("#saveOrAdd").html("Save");
+                $("#viewAddEditPane").show();
+                $.ajax({
+                    url: "/api.php/todos/" + currentId,
+                    type: "GET",
+                    dataType: "json"
+                }).done(function (todo) {
+                    $("#currentId").html(currentId);
+                    $("input[name=task]").val(todo.task);
+                    $("input[name=dueDate]").val(todo.dueDate);
+                    $("input[name=isDone]").attr('checked', todo.isDone === "true");
+                });
+            }
+
             function refreshTodoList() {
                 $.ajax({
                     url: "/api.php/todos",
+                    // data: {},
                     type: "GET",
                     dataType: "json"
                 }).done(function (todoList) {
-                    var result = "<tr><th>#</th><th>task</th><th>due date</th><th>done</th></tr>\n";
+                    var result = "<tr><th>#</th><th>task</th><th>due date</th><th>done?</th></tr>\n";
                     for (var i = 0; i < todoList.length; i++) {
                         var todo = todoList[i];
-                        result += '<tr>';
+                        result += '<tr onclick="selectItem(' + todo.id + ')">';
                         result += '<td>' + todo.id + '</td>';
                         result += '<td>' + todo.task + '</td>';
                         result += '<td>' + todo.dueDate + '</td>';
                         result += '<td>' + todo.isDone + '</td>';
+                        result += "</tr>\n";
                     }
                     $("#listTable").html(result);
                 });
+                // .error(function() {});
             }
 
             $(document).ready(function () {
                 $("#viewAddEditPane").hide();
-                $("#showAddItem").click(function(){
+
+                $("#showAddItem").click(function () {
+                    $("input[name=task]").val("");
+                    $("input[name=dueDate]").val("");
+                    $("input[name=isDone]").attr('checked', false);
+                    currentId = 0;
+                    $("#saveOrAdd").html("Add");
                     $("#viewAddEditPane").show();
                 });
-                $("#cancel").click(function(){
+
+                $("#cancel").click(function () {
                     $("#viewAddEditPane").hide();
                 });
-                
-                $("#saveOrAdd").click(function(){
-                    var task = $("input[name=task]").val();
-                    var dueDate = $("input[name=dueDate]").val();
-                    var isDoneRaw = $("input[name=isDone]").prop('checked');
-                    console.log("task: "+ task + ", dueDate: "+dueDate+" , isDoneRaw: "+isDoneRaw);
-                    $.ajax({
-                        url: "/api.php/todos",
-                    type: "GET",
-                    dataType: "json"
-                    }).done(function(){
-                        alert("Added successfully");
-                        refreshTodoList();
-                    });
-                });    
-                
-                
+
+                $("#saveOrAdd").click(function () {
+                    var taskVal = $("input[name=task]").val();
+                    var dueDateVal = $("input[name=dueDate]").val();
+                    var isDoneVal = $("input[name=isDone]").prop('checked');
+                    console.log("task: " + taskVal + ", dueDate: " + dueDateVal + ", isDoneRaw: " + isDoneVal);
+                    var todo = {task: taskVal, dueDate: dueDateVal, isDone: isDoneVal + ""};                    
+                        $.ajax({
+                            url: "/api.php/todos" + currentId == 0 ? "" : "/" + currentId,
+                            data: JSON.stringify(todo),
+                            type: currentId == 0 ? "POST" : "PUT",
+                            dataType: "json"
+                        }).done(function () {
+                            alert("Addedd successfully");
+                            $("#viewAddEditPane").hide();
+                            refreshTodoList();
+                        });
+                });
+
                 $(document).ajaxError(function () {
                     alert("Ajax error occured");
                 });
-                //alert("its working");
                 refreshTodoList();
             });
-        </script>
+        </script>            
     </head>
     <body>
         <div id="centeredContent">
             <button id="showAddItem">Add todo item</button>
             <div id="listPane">
                 <table id="listTable" border="1">
-
+                    <!-- data will be loaded in here -->
                 </table>
             </div>
             <div id="viewAddEditPane">
-                Current id: <span id="currentId"></span><br>
+                Current Id: <span id="currentId"></span><br>
                 Task: <input type="text" name="task"><br>
                 Due date: <input type="date" name="dueDate"><br>
                 Is done: <input type="checkbox" name="isDone"><br>
@@ -77,6 +105,7 @@
                 <button id="delete">Delete</button>
                 <button id="cancel">Cancel</button>
             </div>
-        </div>
+            <!-- swirl ??? -->
+        </div>        
     </body>
 </html>
