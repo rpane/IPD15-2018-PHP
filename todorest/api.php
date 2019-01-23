@@ -13,7 +13,7 @@ $log->pushHandler(new StreamHandler('logs/errors.log', Logger::ERROR));
 
 DB::$user = 'todorest';
 DB::$dbName = 'todorest';
-DB::$password = 'cNr54Drcl6C57Tmb';
+DB::$password = 'J3140qw6dZqVce8k';
 DB::$port = 3333;
 DB::$host = 'localhost';
 DB::$encoding = 'utf8';
@@ -40,7 +40,7 @@ $app->response()->header('content-type', 'application/json');
 
 
 $app->get('/todos', function() use ($app, $log) {
-    $todoList = DB::query("SELECT *** FROM todos");
+    $todoList = DB::query("SELECT * FROM todos");
     echo json_encode($todoList, JSON_PRETTY_PRINT);
 });
 
