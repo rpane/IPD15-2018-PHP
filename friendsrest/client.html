@@ -8,37 +8,35 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script>
             var currentId = 0; // 0 means no record selected
-            function selectItem(todoId) {
-                currentId = todoId;
+            function selectItem(friendId) {
+                currentId = friendId;
                 $("#saveOrAdd").html("Save");
                 $("#viewAddEditPane").show();
                 $.ajax({
-                    url: "/api.php/todos/" + currentId,
+                    url: "/api.php/friends/" + currentId,
                     type: "GET",
                     dataType: "json"
-                }).done(function (todo) {
+                }).done(function (friend) {
                     $("#currentId").html(currentId);
-                    $("input[name=task]").val(todo.task);
-                    $("input[name=dueDate]").val(todo.dueDate);
-                    $("input[name=isDone]").attr('checked', todo.isDone === "true");
+                    $("input[name=name]").val(friend.name);
+                    $("input[name=age]").val(friend.age);                   
                 });
             }
 
-            function refreshTodoList() {
+            function refreshFriendList() {
                 $.ajax({
-                    url: "/api.php/todos",
+                    url: "/api.php/friends",
                     // data: {},
                     type: "GET",
                     dataType: "json"
-                }).done(function (todoList) {
-                    var result = "<tr><th>#</th><th>task</th><th>due date</th><th>done?</th></tr>\n";
-                    for (var i = 0; i < todoList.length; i++) {
-                        var todo = todoList[i];
-                        result += '<tr onclick="selectItem(' + todo.id + ')">';
-                        result += '<td>' + todo.id + '</td>';
-                        result += '<td>' + todo.task + '</td>';
-                        result += '<td>' + todo.dueDate + '</td>';
-                        result += '<td>' + todo.isDone + '</td>';
+                }).done(function (friendList) {
+                    var result = "<tr><th>#</th><th>name</th><th>age</th></tr>\n";
+                    for (var i = 0; i < friendList.length; i++) {
+                        var friend = friendList[i];
+                        result += '<tr onclick="selectItem(' + friend.id + ')">';
+                        result += '<td>' + friend.id + '</td>';
+                        result += '<td>' + friend.name + '</td>';
+                        result += '<td>' + friend.age + '</td>';                        
                         result += "</tr>\n";
                     }
                     $("#listTable").html(result);
@@ -50,9 +48,8 @@
                 $("#viewAddEditPane").hide();
 
                 $("#showAddItem").click(function () {
-                    $("input[name=task]").val("");
-                    $("input[name=dueDate]").val("");
-                    $("input[name=isDone]").attr('checked', false);
+                    $("input[name=name]").val("");
+                    $("input[name=age]").val("");                    
                     currentId = 0;
                     $("#saveOrAdd").html("Add");
                     $("#viewAddEditPane").show();
@@ -63,33 +60,32 @@
                 });
 
                 $("#saveOrAdd").click(function () {
-                    var taskVal = $("input[name=task]").val();
-                    var dueDateVal = $("input[name=dueDate]").val();
-                    var isDoneVal = $("input[name=isDone]").prop('checked');
-                    console.log("task: " + taskVal + ", dueDate: " + dueDateVal + ", isDoneRaw: " + isDoneVal);
-                    var todo = {task: taskVal, dueDate: dueDateVal, isDone: isDoneVal + ""};                    
+                    var nameVal = $("input[name=name]").val();
+                    var ageVal = $("input[name=age]").val();                    
+                    console.log("name: " + nameVal + ", age: " + ageVal);
+                    var friend = {name: nameVal, age: ageVal};                    
                         $.ajax({
-                            url: "/api.php/todos" + currentId == 0 ? "" : "/" + currentId,
-                            data: JSON.stringify(todo),
+                            url: "/api.php/friends" + currentId == 0 ? "" : "/" + currentId,
+                            data: JSON.stringify(friend),
                             type: currentId == 0 ? "POST" : "PUT",
                             dataType: "json"
                         }).done(function () {
                             alert("Addedd successfully");
                             $("#viewAddEditPane").hide();
-                            refreshTodoList();
+                            refreshFriendList();
                         });
                 });
 
                 $(document).ajaxError(function () {
                     alert("Ajax error occured");
                 });
-                refreshTodoList();
+                refreshFriendList();
             });
         </script>            
     </head>
     <body>
         <div id="centeredContent">
-            <button id="showAddItem">Add todo item</button>
+            <button id="showAddItem">Add Friend</button>
             <div id="listPane">
                 <table id="listTable" border="1">
                     <!-- data will be loaded in here -->
@@ -97,9 +93,8 @@
             </div>
             <div id="viewAddEditPane">
                 Current Id: <span id="currentId"></span><br>
-                Task: <input type="text" name="task"><br>
-                Due date: <input type="date" name="dueDate"><br>
-                Is done: <input type="checkbox" name="isDone"><br>
+                Name: <input type="text" name="name"><br>
+                Age: <input type="number" name="age"><br>                
                 <button id="saveOrAdd">Save or Add</button>
                 <button id="delete">Delete</button>
                 <button id="cancel">Cancel</button>
