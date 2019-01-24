@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Add Auction Item</title>
+        <link rel="stylesheet" href="/styles.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script>
+            var currentId = 0;
+            $(document).ready(function () {  
+                
+                $("#postItem").click(function () {
+                    var descVal = $("textarea[name=description]").val();   
+                    var emailVal = $("input[name=sellerEmail]").val();
+                    console.log("Description: " + descVal +" ,  sellerEmail: "+ emailVal);
+                    var bid = {itemDesc: descVal, sellerEmail: emailVal};                    
+                        $.ajax({
+                            url: "/api.php/auctions" + (currentId == 0 ? "" : "/" + currentId),
+                            data: JSON.stringify(bid),
+                            type: currentId == 0 ? "POST" : "PUT",
+                            dataType: "json"
+                        }).done(function () {
+                            alert("Successfully added item");
+                            
+                            currentId = 0;
+                            
+                        });
+                });
+
+                $(document).ajaxError(function () {
+                    alert("Ajax error occured");
+                });
+               
+            });
+        </script>            
+    </head>
+    <body>
+        <div id="centeredContent"> 
+            <div id="viewAddEditPane">
+                <h4>Add new item for auction</h4>
+                Description:<textarea name="description"></textarea><br>
+                Seller Email: <input type="email" name="sellerEmail"><br>  
+                <button id="postItem">Place item for auction</button>
+            </div>
+            <!-- swirl ??? -->
+        </div>        
+    </body>
+</html>

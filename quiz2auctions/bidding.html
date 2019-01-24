@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Bidding</title>
+        <link rel="stylesheet" href="/styles.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script>
+            var currentId = 0; // 0 means no record selected
+            function selectItem(aucId) {
+                currentId = aucId;
+                $.ajax({
+                    url: "/api.php/auctions/" + currentId,
+                    type: "GET",
+                    dataType: "json"
+                }).done(function (auc) {
+                    var id = auc.id;
+                    var itDe = auc.itemDesc;
+                    var ownr = auc.sellerEmail;
+                    var itCst = auc.lastBid;
+                    var selEm = auc.lastBidderEmail;
+                    document.getElementById('curID').innerHTML = id;
+                    document.getElementById('itemDe').innerHTML = itDe;
+                    document.getElementById('owner').innerHTML = ownr;
+                    document.getElementById('itemCost').innerHTML = itCst;
+                    document.getElementById('sellEm').innerHTML = selEm;
+                    $("#itemBid").show();
+                });
+            }
+
+            // sortBy may be: any one field of table todos
+            function refreshAucList(sortBy = '') {
+                $.ajax({
+                    url: "/api.php/auctions" + (sortBy == '' ? '' : '?sortBy=' + sortBy),
+                    // data: {},
+                    type: "GET",
+                    dataType: "json"
+                }).done(function (aucList) {
+                    var result = "<tr><th>#</th><th>Description</th><th>Seller Email</th><th>Last Bid</th><th>Last Bidder Email</th></tr>\n";
+                    for (var i = 0; i < aucList.length; i++) {
+                        var auction = aucList[i];
+                        result += '<tr onclick="selectItem(' + auction.id + ')">';
+                        result += '<td>' + auction.id + '</td>';
+                        result += '<td>' + auction.itemDesc + '</td>';
+                        result += '<td>' + auction.sellerEmail + '</td>';
+                        result += '<td>' + auction.lastBid + '</td>';
+                        result += '<td>' + auction.lastBidderEmail + '</td>';
+                        result += "</tr>\n";
+                    }
+                    $("#listTable").html(result);
+                });
+                // .error(function() {});
+            }
+
+            $(document).ready(function () {
+
+
+                $("#itemBid").hide();
+                $("#sortByDescrip").click(function () {
+                    refreshAucList("itemDesc");
+                });
+                $("#sortByLastBid").click(function () {
+                    refreshAucList("lastBid");
+                });
+                $("#bid").click(function () {                    
+                    var itemDes = document.getElementById("itemDe").innerText;
+                    var sellr = document.getElementById("owner").innerText;
+                    var bidVal = $("input[name=placeBid]").val();
+                    var emailVal = $("input[name=bidderEmail]").val();
+                    console.log("bid: " + bidVal + " ,  bidderEmail: " + emailVal);
+                    var bid = {itemDesc: itemDes,sellerEmail: sellr, lastBid: bidVal, lastBidderEmail: emailVal};
+                    $.ajax({
+                        url: "/api.php/auctions" + (currentId == 0 ? "" : "/" + currentId),
+                        data: JSON.stringify(bid),
+                        type: "PUT",
+                        dataType: "json"
+                    }).done(function () {
+                        alert("Successfully bid on item");
+                        currentId = 0;
+                        refreshAucList();
+                    });
+                });
+                $(document).ajaxError(function () {
+                    alert("Ajax error occured");
+                });
+                refreshAucList();
+            });
+        </script>            
+    </head>
+    <body>
+        <div id="centeredContent">
+            My Email:<input type="email" name="bidderEmail"><br> 
+            <button id="sortByDescrip">Sort by description</button>
+            <button id="sortByLastBid">Sort by last bid</button>            
+            <div id="listPane">
+                <table id="listTable" border="1">
+                    <!-- data will be loaded in here -->
+                </table>
+            </div>
+            <div id ="itemBid">
+                You're bidding on item #<span id="curID"></span> which is <span id="itemDe"></span> put up for auction
+                by <span id = "owner"></span>, current bid is $<span id="itemCost"> </span> by <span id="sellEm"></span > 
+            </div><br>
+            <div id="viewAddEditPane">                
+                Place your bid: <input type="text" name="placeBid">                               
+                <button id="bid">Place Bid</button>
+            </div>
+            <!-- swirl ??? -->
+        </div>        
+    </body>
+</html>

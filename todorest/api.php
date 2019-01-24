@@ -40,7 +40,15 @@ $app->response()->header('content-type', 'application/json');
 
 
 $app->get('/todos', function() use ($app, $log) {
-    $todoList = DB::query("SELECT * FROM todos");
+    $sortBy = $app->request()->get('sortBy', 'id');
+    // order by argument must not be quoted and must be sanitized by hand
+    if (!in_array($sortBy, array('id', 'task', 'dueDate', 'isDone'))) {
+        $log->err("GET /todos failed due to invalid sortBy argument: " + $sortBy);
+        $app->response()->status(400);
+        echo json_encode(false);
+        return;
+    }
+    $todoList = DB::query("SELECT * FROM todos ORDER BY %l", $sortBy);
     echo json_encode($todoList, JSON_PRETTY_PRINT);
 });
 
